@@ -18,7 +18,7 @@ sudo apt-get update
 
 
 # install dependencies
-sudo apt-get install -y net-tools cephadm docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install -y net-tools cephadm ceph-common docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 ### run on first ceph node
 
