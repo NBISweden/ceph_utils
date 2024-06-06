@@ -33,6 +33,8 @@ fi
 # iterate over the list of nodes
 while IFS= read -r node; do
 
+
+    echo $node
     # command to execute
     cmd="ssh -o StrictHostKeyChecking=no $node $@"
 
@@ -41,11 +43,12 @@ while IFS= read -r node; do
     if [ "$parallel" = true ]; then
         $cmd &
     else
-        $cmd &
-        wait
+        $cmd
     fi
     echo -e "----------------------------------------\n\n"
 done < "$nodes_file"
+
+wait
 
 
 
