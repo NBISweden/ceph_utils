@@ -1,3 +1,4 @@
 .*.sw*
 ssh_key_adder.sh
 node_list.txt
+venv/
