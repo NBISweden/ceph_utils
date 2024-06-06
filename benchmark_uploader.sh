@@ -45,8 +45,7 @@ done
 
 # Generate random file with the specified size
 random_file="/dev/shm/random_file.txt"
-dd if=/dev/urandom of=$random_file bs=${size} count=1
-
+head -c $size /dev/urandom > $random_file
 # Upload files concurrently
 bucket_name="test"
 for ((i=1; i<=$copies; i++)); do
