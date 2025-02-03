@@ -9,6 +9,7 @@ function display_help {
     echo "  -n COPIES      Number of copies to upload (default: 1)"
     echo "  -c CONCURRENCY Number of concurrent uploads (default: 1)"
     echo "  -e ENDPOINT    IP address of S4 Ceph cluster endpoint (e.g. http://hostname)"
+    echo "  -b BUCKET      Bucket name (e.g. myBucket, default: test)"
     exit 1
 }
 
@@ -17,9 +18,10 @@ size="1G"
 copies=1
 concurrency=1
 endpoint=""
+bucket_name="test"
 
 # Process command-line arguments
-while getopts "hs:n:c:e:" opt; do
+while getopts "hs:n:c:e:b:" opt; do
     case $opt in
         h)
             display_help
@@ -36,6 +38,9 @@ while getopts "hs:n:c:e:" opt; do
         e)
             endpoint=$OPTARG
             ;;
+        b)
+            bucket_name=$OPTARG
+            ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
             display_help
@@ -47,11 +52,10 @@ done
 random_file="/dev/shm/random_file.txt"
 head -c $size /dev/urandom > $random_file
 # Upload files concurrently
-bucket_name="test"
 for ((i=1; i<=$copies; i++)); do
     for ((j=1; j<=$concurrency; j++)); do
         if [[ -z "$endpoint" ]]; then
-            ( aws s3 cp $random_file s3://$bucket_name/$(uuidgen) ) &
+            ( aws --profile ceph s3 cp $random_file s3://$bucket_name/$(uuidgen) ) &
         else
             ( aws --profile ceph --endpoint $endpoint s3 cp $random_file s3://$bucket_name/$(uuidgen) ) &
         fi
