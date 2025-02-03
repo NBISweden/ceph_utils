@@ -60,10 +60,12 @@ RemainAfterExit=yes
 [Install]
 WantedBy=sysinit.target
 EOF
+systemctl enable mdadm_esp.service
 
+# clean up
 umount /tmp/RAID/
 mount /boot/efi
 
-systemctl enable mdadm_esp.service
+# update 
 update-initramfs -u
 

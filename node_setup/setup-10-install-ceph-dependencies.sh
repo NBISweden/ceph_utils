@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# --- Start MAAS 1.0 script metadata ---
+# name: setup-10-install-ceph-dependencies
+# title: Install software needed by Ceph
+# description: Install software needed by Ceph
+# script_type: commissioning
+# timeout: 00:05:00
+# --- End MAAS 1.0 script metadata ---
 # This script is used to commision a node in MAAS
 
 # Add Docker's official GPG key:
