@@ -17,7 +17,7 @@ Here is a collection of scripts used to create and configure the Ceph cluster.
 ### Configure nodes
 
 
-### Commision nodes
+### Deploy nodes
 
 
 

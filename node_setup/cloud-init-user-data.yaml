@@ -103,7 +103,7 @@ write_files:
 
 
       # install dependencies
-      sudo apt-get install -y net-tools cephadm ceph-common docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+      sudo apt-get install -y net-tools cephadm ceph-common docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin smartmontools btop
 
 runcmd:
   # Execute raid1 creation script
