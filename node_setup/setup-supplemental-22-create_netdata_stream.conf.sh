@@ -5,7 +5,7 @@ netdata_dest=$1
 netdata_allow=$2
 
 # download config file
-wget https://raw.githubusercontent.com/nsm-lab/netdata/refs/heads/master/streaming/stream.conf
+wget -O stream.conf https://raw.githubusercontent.com/nsm-lab/netdata/refs/heads/master/streaming/stream.conf
 
 # generate api key
 api_key=$(uuidgen)
