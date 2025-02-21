@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Post-deployment script setup-00-raid1-boot-partitions.sh running" >> /var/log/post_deploy_setup-00-raid1-boot-partitions.log
+
 # add entry for 2nd partition
 efibootmgr -c -L "ubuntu1" -d /dev/nvme1n1 -p 1 -l "\EFI\ubuntu\shimx64.efi"
 

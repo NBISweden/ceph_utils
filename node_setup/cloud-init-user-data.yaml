@@ -105,6 +105,10 @@ write_files:
       # install dependencies
       sudo apt-get install -y net-tools cephadm ceph-common docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin smartmontools btop
 
+      # get the helper scripts
+      cd /home/ubuntu
+      sudo -u ubuntu bash -c "git clone https://github.com/NBISweden/ceph_utils.git"
+
 runcmd:
   # Execute raid1 creation script
   - [ bash, -c, '/root/setup-00-raid1-boot-partitions.sh' ]
