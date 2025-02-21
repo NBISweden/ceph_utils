@@ -10,6 +10,14 @@
 netdata_dest=$1
 netdata_allow=$2
 
+# Check if any of the arguments are empty
+if [[ -z "$netdata_dest" ]] || [[ -z "$netdata_allow" ]]; then
+    echo "Usage: $0 <netdata_dest> <netdata_allow>"
+    echo "  <netdata_dest>   Description of netdata_dest."
+    echo "  <netdata_allow>  Description of netdata_allow."
+    exit 1
+fi
+
 # install the first node
 cephadm bootstrap --mon-ip 10.10.11.1 --cluster-network 10.10.11.0/24 | tee /root/ceph-bootstrap-installation.log
 
