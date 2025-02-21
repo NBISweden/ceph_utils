@@ -15,6 +15,7 @@ fi
 
 # distribute and execute the ssh key adder script and netdata config file
 cd ~/ceph_utils/node_setup
+git pull
 
 # create node_list.txt
 echo "ubuntu@10.10.11.1" > node_list.txt
