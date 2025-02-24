@@ -3,3 +3,7 @@ ssh_key_adder.sh
 node_list.txt
 venv/
 stream*.conf
+*.csr
+*.key
+*.crt
+*.pem
