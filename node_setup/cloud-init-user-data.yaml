@@ -9,8 +9,21 @@ write_files:
 
       echo "Post-deployment script setup-00-raid1-boot-partitions.sh running" >> /var/log/post_deploy_setup-00-raid1-boot-partitions.log
 
+      # Get the name of the NVMe drive mounted on /boot/efi
+      boot_nvme=$(lsblk -no pkname $(df --output=source /boot/efi | tail -n 1))
+
+      # Determine the other NVMe drive
+      if [[ "$boot_nvme" == "nvme0n1" ]]; then
+        other_nvme="nvme1n1"
+      elif [[ "$boot_nvme" == "nvme1n1" ]]; then
+        other_nvme="nvme0n1"
+      else
+        echo "Error: Neither of the NVMe drives are mounted on /boot/efi."
+        exit 1
+      fi
+
       # add entry for 2nd partition
-      efibootmgr -c -L "ubuntu1" -d /dev/nvme1n1 -p 1 -l "\EFI\ubuntu\shimx64.efi"
+      efibootmgr -c -L "ubuntu1" -d /dev/$other_nvme -p 1 -l "\EFI\ubuntu\shimx64.efi"
 
       # set boot order to the boot partitions before network
       # Find the IDs for "ubuntu" entries and store them in a variable
@@ -32,7 +45,7 @@ write_files:
       efibootmgr -o "$cleaned_order"
 
       # create raid volume with 2nd partition only
-      yes | mdadm --create /dev/md100 --level 1 --raid-disks 2 --metadata 1.0 -f /dev/nvme1n1p1 missing
+      yes | mdadm --create /dev/md100 --level 1 --raid-disks 2 --metadata 1.0 -f /dev/${other_nvme}p1 missing
 
       # create fs
       mkfs.fat -F32 /dev/md100
@@ -42,8 +55,8 @@ write_files:
       rsync -av --progress /boot/efi/ /tmp/RAID/
 
       # add 1st partition to raid
-      umount /dev/nvme0n1p1
-      mdadm --manage /dev/md100 --add /dev/nvme0n1p1
+      umount /dev/${boot_nvme}p1
+      mdadm --manage /dev/md100 --add /dev/${boot_nvme}p1
 
       # change boot to raid partition and make it not automount in fstab
       sed -i 's|/dev/disk/by-uuid/[^\s]\+ /boot/efi vfat defaults 0 1|/dev/md100 /boot/efi vfat umask=0077,noauto,defaults 0 0|' /etc/fstab
