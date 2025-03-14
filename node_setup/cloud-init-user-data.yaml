@@ -5,7 +5,7 @@ write_files:
     permissions: '0755'
     owner: root:root
     content: |
-      #!/bin/sh
+      #!/bin/bash
 
       echo "Post-deployment script setup-00-raid1-boot-partitions.sh running" >> /var/log/post_deploy_setup-00-raid1-boot-partitions.log
 
@@ -96,7 +96,7 @@ write_files:
     permissions: '0755'
     owner: root:root
     content: |
-      #!/bin/sh
+      #!/bin/bash
 
       echo "Post-deployment script setup-10-install-ceph-dependencies.sh running" >> /var/log/post_deploy_setup-10-install-ceph-dependencies.log
 
