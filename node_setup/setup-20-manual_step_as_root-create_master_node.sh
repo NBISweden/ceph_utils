@@ -7,7 +7,7 @@
 # add nodes using the root account..
 
 # install the first node
-cephadm bootstrap --mon-ip 10.10.11.1 --cluster-network 10.10.11.0/24 | tee /root/ceph-bootstrap-installation.log
+cephadm bootstrap --mon-ip 130.238.54.175 --cluster-network 10.10.11.0/24 | tee /root/ceph-bootstrap-installation.log
 
 # create the ssh key adder script
 cat <<EOF > ssh_key_adder.sh
