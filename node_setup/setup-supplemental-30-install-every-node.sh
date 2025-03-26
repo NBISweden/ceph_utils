@@ -27,11 +27,11 @@ sudo mv /home/ubuntu/stream.conf /var/lib/docker/volumes/netdata_netdataconfig/_
 sudo docker compose -f setup-supplemental-40-netdata-docker-compose.yaml up -d
 
 # install caddy
-mkdir -p /etc/caddy
-cat <<EOF > /etc/caddy/Caddyfile
+sudo mkdir -p /etc/caddy
+sudo bash -c "cat <<EOF > /etc/caddy/Caddyfile
 https://$HOSTNAME.nbis.se {
     reverse_proxy localhost:8080
 }
-EOF
-DEBIAN_FRONTEND=noninteractive sudo apt install -y caddy
+EOF"
+DEBIAN_FRONTEND=noninteractive sudo apt install -y -o Dpkg::Options::="--force-confold" caddy
 
